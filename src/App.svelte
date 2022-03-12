@@ -1,15 +1,11 @@
 <script lang="ts">
-	import CubeParams from './components/CubeParams.svelte'
-
-	export let name: string;
+	import CubeMonitor from './components/CubeMonitor.svelte'
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-	<CubeParams role={"音量"}/>
-	<CubeParams role={"リバーブ"}/>
-	<CubeParams role={"速度"}/>
+	<CubeMonitor role={"音量"}/>
+	<CubeMonitor role={"リバーブ"}/>
+	<CubeMonitor role={"速度"}/>
 </main>
 
 <style>
