@@ -22,8 +22,8 @@ const getHexVal = (value: DataView, index: number) =>
     : "00";
 
 const decodeMotion = (value: DataView): number[] =>
-  [...Array(value.byteLength).keys()].map(
-    (index) => parseInt("0x" + getHexVal(value, index), 16)
+  [...Array(value.byteLength).keys()].map((index) =>
+    parseInt("0x" + getHexVal(value, index), 16)
   );
 
 const decodePosition = (value: DataView): [number, number, number] => {
@@ -83,7 +83,8 @@ export const getNewCube = async ({
     await positionCharacteristic.startNotifications();
     positionCharacteristic.addEventListener(
       "characteristicvaluechanged",
-      (event) => onGetPositionValue(decodePosition((event.target as any)?.value))
+      (event) =>
+        onGetPositionValue(decodePosition((event.target as any)?.value))
     );
 
     return {
