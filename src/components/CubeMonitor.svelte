@@ -1,6 +1,7 @@
 <script lang="ts">
 import { getNewCube, type Cube } from "../api/toio";
 import { addCube, cubeParams, updateCubeParams } from "../store";
+import RadiusButton from "./RadiusButton.svelte";
 import DjSlider from "./DJSlider.svelte";
 
 export let role: string = 'No name';
@@ -30,12 +31,27 @@ const onClick = () => {
 </script>
 
 <div class="container">
-  <h2>{role}</h2>
+  <h2 class="role-name">{role}</h2>
 
-  {#if cubeLoaded}
-  <div>({x}, {y}, {angle})</div>
-  {:else}
-  <button on:click={onClick}>add</button>
-  {/if}
-  <DjSlider max={360} min={0} value={angle} />
+  <DjSlider max={360} min={0} value={angle} disabled={!cubeLoaded} />
+  <div class="connect-toio-button-wrapper">
+    <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
+  </div>
 </div>
+
+<style lang="scss">
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .role-name {
+    width: 6em;
+    overflow: hidden;
+  }
+
+  .connect-toio-button-wrapper {
+    margin-left: 1em;
+  }
+</style>

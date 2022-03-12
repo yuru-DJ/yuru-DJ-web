@@ -2,12 +2,12 @@
 export let max: number = 1;
 export let min: number = 0;
 export let value: number = min;
-
-const onChangeValue = (e) => console.log(e.target)
+export let disabled: boolean = false;
+export let valueChanged = (e: Event) => {};
 </script>
 
 <form style={`--min: ${min}; --max: ${max}; --val: ${value}`}>
-  <input max={max} min={min} type="range" value={value} on:change={onChangeValue} />
+  <input max={max} min={min} type="range" value={value} disabled={disabled} on:change={valueChanged} />
 </form>
 
 <style lang="scss">
