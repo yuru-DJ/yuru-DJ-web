@@ -26,7 +26,7 @@ const onChangeValue = (e) => console.log(e.target)
   $label-o: .5*$label-w;
 
   @mixin track() {
-    margin: $input-p;
+    margin: 0 $input-p;
     height: $track-h;
     border-radius: $track-r;
     box-shadow: inset 0 1px 4px #8c8c8c;

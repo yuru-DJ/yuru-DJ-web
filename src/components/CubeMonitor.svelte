@@ -29,11 +29,13 @@ const onClick = () => {
 }
 </script>
 
-<h2>{role}</h2>
+<div class="container">
+  <h2>{role}</h2>
 
-{#if cubeLoaded}
-<div>({x}, {y}, {angle})</div>
-{:else}
-<button on:click={onClick}>add</button>
-{/if}
-<DjSlider max={360} min={0} value={angle} />
+  {#if cubeLoaded}
+  <div>({x}, {y}, {angle})</div>
+  {:else}
+  <button on:click={onClick}>add</button>
+  {/if}
+  <DjSlider max={360} min={0} value={angle} />
+</div>
