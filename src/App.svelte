@@ -4,30 +4,41 @@
 </script>
 
 <main>
-	<AudioPlayer/>
-	<CubeMonitor role={"音量"}/>
-	<CubeMonitor role={"リバーブ"}/>
-	<CubeMonitor role={"速度"}/>
+	<AudioPlayer />
+
+	<div class="monitor-container">
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"音量"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"リバーブ"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"速度"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"音量"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"リバーブ"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"速度"}/>
+		</div>
+	</div>
 </main>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+<style lang="scss">
+  .monitor-container {
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-rows: 30% 30% 30%;
+		grid-template-columns: 50% 50%;
+		padding: 16px;
+		width: 100%;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	.monitor-wrapper {
+		margin: 1em;
 	}
 </style>
