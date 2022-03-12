@@ -1,9 +1,11 @@
 <script lang="ts">
 	import CubeMonitor from './components/CubeMonitor.svelte'
+	import SerialMonitor from './components/SerialMonitor.svelte'
 	import AudioPlayer from './components/AudioPlayer.svelte'
 </script>
 
 <main>
+	<SerialMonitor />
 	<AudioPlayer />
 
 	<div class="monitor-container">
