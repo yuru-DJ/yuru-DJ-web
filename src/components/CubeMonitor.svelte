@@ -33,17 +33,19 @@ const onClick = () => {
 <div class="container">
   <h2 class="role-name">{role}</h2>
 
-  <DjSlider max={360} min={0} value={angle} disabled={!cubeLoaded} />
   <div class="connect-toio-button-wrapper">
-    <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
+    <DjSlider max={360} min={0} value={angle} disabled={!cubeLoaded} />
   </div>
+  <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
 </div>
 
 <style lang="scss">
   .container {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
   }
 
   .role-name {
@@ -52,6 +54,7 @@ const onClick = () => {
   }
 
   .connect-toio-button-wrapper {
-    margin-left: 1em;
+    margin-right: 1em;
+    width: calc(50%);
   }
 </style>

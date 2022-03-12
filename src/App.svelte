@@ -7,12 +7,24 @@
 	<AudioPlayer />
 
 	<div class="monitor-container">
-		<CubeMonitor role={"音量"}/>
-		<CubeMonitor role={"リバーブ"}/>
-		<CubeMonitor role={"速度"}/>
-		<CubeMonitor role={"音量"}/>
-		<CubeMonitor role={"リバーブ"}/>
-		<CubeMonitor role={"速度"}/>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"音量"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"リバーブ"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"速度"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"音量"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"リバーブ"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"速度"}/>
+		</div>
 	</div>
 </main>
 
@@ -22,7 +34,11 @@
 		grid-auto-flow: column;
 		grid-template-rows: 30% 30% 30%;
 		grid-template-columns: 50% 50%;
-		padding: 5px;
+		padding: 16px;
 		width: 100%;
   }
+
+	.monitor-wrapper {
+		margin: 1em;
+	}
 </style>

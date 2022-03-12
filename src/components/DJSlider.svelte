@@ -12,7 +12,7 @@ export let valueChanged = (e: Event) => {};
 
 <style lang="scss">
   $input-p: .375em;
-  $input-w: 19.5em;
+  $input-w: 100%;
   $input-h: 2.25em;
   $input-r: .5*$input-h;
 
