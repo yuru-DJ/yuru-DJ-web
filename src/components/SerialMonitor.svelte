@@ -2,6 +2,7 @@
 import RadiusButton from "./RadiusButton.svelte";
 
 import { connectSerial, readSerial } from "../api/serial";
+import { volume } from "../store";
 
 let serialConnected = false;
 
@@ -13,10 +14,10 @@ const onClick = async () => {
   readSerial(reader, (value) => {
     switch (value) {
       case 'NEAR':
-        console.log('near!')
+        volume.set(0);
         break;
       case 'FAR':
-        console.log('far!')
+        volume.set(1);
         break;
       default:
         console.log(value)
