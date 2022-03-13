@@ -43,51 +43,33 @@ latestCubeParam.subscribe(value => {
     let index = $latestCubeParam[0];
     let parX = $latestCubeParam[1];
     let parY = $latestCubeParam[2];
-    let parAngle = $latestCubeParam[3];
+    // let parAngle = $latestCubeParam[3];
 
-    if (parAngle == 1) {
-        // switch filter by wet value
-        switch (index) {
-            case 0:
-                filter.wet.value = 1;
-                filter.frequency.value = parX * 10;
-                filter.depth.value = parY;
-            case 1:
-                pingpongDelay.wet.value = 1;
-                pingpongDelay.delayTime.value = parX * 0.2;
-                pingpongDelay.feedback.value = parY * 0.6;
-            case 2:
-                pitchShift.wet.value = 1;
-                pitchShift.pitch = parX * 12;
-                pitchShift.delayTime.value = parY * 0.01;
-            case 3:
-                vibrato.wet.value = 1;
-                vibrato.frequency.value = parX * 100;
-                vibrato.depth.value = parY;
-            case 4:
-                frequencyShifter.wet.value = 1;
-                frequencyShifter.frequency.value = parX * 80;
-                reverb.wet.value = 1;
-                reverb.roomSize.value = parY * 0.6;
-            default:
-                break;
-        }
-    } else {
-        switch (index) {
-            case 0:
-                filter.wet.value = 0;
-            case 1:
-                pingpongDelay.wet.value = 0;
-            case 2:
-                pitchShift.wet.value = 0;
-            case 3:
-                vibrato.wet.value = 0;
-            case 4:
-                frequencyShifter.wet.value = 0;
-                reverb.wet.value = 0;
-            default:
-                break;
-        }
+    // switch filter by wet value
+    switch (index) {
+        case 0:
+            filter.wet.value = 1;
+            filter.frequency.value = parX * 10;
+            filter.depth.value = parY;
+        case 1:
+            pingpongDelay.wet.value = 1;
+            pingpongDelay.delayTime.value = parX * 0.2;
+            pingpongDelay.feedback.value = parY * 0.6;
+        case 2:
+            pitchShift.wet.value = 1;
+            pitchShift.pitch = parX * 12;
+            pitchShift.delayTime.value = parY * 0.01;
+        case 3:
+            vibrato.wet.value = 1;
+            vibrato.frequency.value = parX * 100;
+            vibrato.depth.value = parY;
+        case 4:
+            frequencyShifter.wet.value = 1;
+            frequencyShifter.frequency.value = parX * 80;
+            reverb.wet.value = 1;
+            reverb.roomSize.value = parY * 0.6;
+        default:
+            break;
     }
 });
 
