@@ -1,6 +1,5 @@
 <script lang="ts">
-
-import { getNewCube } from "../api/toio";
+import { connectCube } from "../api/toio";
 import { addCube, cubeParams, updateCubeParams, latestCubeParam } from "../store";
 import RadiusButton from "./RadiusButton.svelte";
 import DjSlider from "./DJSlider.svelte";
@@ -9,15 +8,20 @@ export let role: string = 'No name';
 
 // let cube: Cube;
 let cubeLoaded = false;
+let cubeDisabled = false;
 let index;
 let [x, y, angle] = [-1, -1, -1]; // normalized value
+
 const MIN_X = 100;
 const MAX_X = 400;
 const MIN_Y = 150;
 const MAX_Y = 350;
 
-const onGetPositionValue = (value: [number, number, number]) => {
-  [x, y, angle] = value;
+const near = (now: number, prev: number): boolean => Math.abs(now - prev) < 0.1;
+const onGetPositionValue = (values: [number, number, number]) => {
+  if (cubeDisabled || values.every((val) => val === 0)) return;
+
+  [x, y, angle] = values;
 
   const params = $cubeParams[index];
   const prevX = params.x;
@@ -28,17 +32,22 @@ const onGetPositionValue = (value: [number, number, number]) => {
   const normY = Math.min(Math.max((y - MIN_Y) / (MAX_Y - MIN_Y), 0.001), 1);
   const normAngle = Math.floor(angle / 180);
 
-  const near = (now: number, prev: number): boolean => Math.abs(now - prev) < 0.1;
-  if (near(normX, prevX) || near(normY, prevY) || near(normAngle, prevAngle)) {
-    latestCubeParam.set([index, normX, normY, normAngle]);
-    updateCubeParams(index, {x: normX, y: normY, angle: normAngle});
-  }
+  if (near(normX, prevX) && near(normY, prevY) && near(normAngle, prevAngle)) return;
+
+  latestCubeParam.set([index, normX, normY, normAngle]);
+  updateCubeParams(index, {x: normX, y: normY, angle: normAngle});
 };
 
-const onGetMotionValue = (value: number[]) => console.log('motion:', value);
+const onGetMotionValue = (values: number[]) => {
+  if (values[4] === 1) {
+    cubeDisabled = false;
+  } else if (values[4] > 1) {
+    cubeDisabled = true;
+  }
+}
 
 const onClick = () => {
-  getNewCube({ onGetMotionValue, onGetPositionValue }).then((c) => {
+  connectCube({ onGetMotionValue, onGetPositionValue }).then((c) => {
     if (!c) return
 
     // cube = c;
@@ -53,8 +62,8 @@ const onClick = () => {
 <div class="container">
   <h2 class="role-name">{role}</h2>
   <div class="connect-toio-button-wrapper">
-    <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded} />
-    <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded} />
+    <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded || cubeDisabled} />
+    <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded || cubeDisabled} />
   </div>
   <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
 </div>
@@ -69,7 +78,7 @@ const onClick = () => {
   }
 
   .role-name {
-    width: 6em;
+    width: 5em;
     overflow: hidden;
   }
 

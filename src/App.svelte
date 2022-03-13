@@ -60,7 +60,7 @@
 		display: grid;
 		grid-auto-flow: column;
 		grid-template-rows: 30% 30% 30%;
-		grid-template-columns: 50% 50%;
+		grid-template-columns: 48% 48%;
 		padding: 16px;
 		width: 100%;
   }
