@@ -1,3 +1,25 @@
+:root {
+ --mainWhite: #f2f3f7;
+ --buttonWhite:-2px -2px 5px rgba(255,255,255,1),
+                 3px 3px 5px rgba(0,0,0,.07); 
+ --buttonWhiteActive:inset -2px -2px 5px rgba(255,255,255,1),
+                     inset 3px 3px 5px rgba(0,0,0,.07);
+ --iconWhiteVer:#6a9bd8;
+ --mainDark:#222;
+  --buttonDark:inset -2px -2px 5px rgba(0,0,0,0.5),
+                     inset 3px 3px 5px rgba(255,255,255,.07);
+ --buttonDarkActive:-2px -2px 5px rgba(0,0,0,0.5),
+                 3px 3px 5px rgba(255,255,255,.07); 
+
+ --iconDarkVer:#3e3e3e;
+ --iconDarkVerActive:0 0 10px rgba(33,156,243,1),
+                      0 0 10px rgba(33,156,243,1);
+ --iconDarkLine:0 0 10px rgba(33,156,243,.5),
+   0 0 20px rgba(33,156,243,.5),
+   0 0 30px rgba(33,156,243,.5),
+   inset 0 0 10px rgba(33,156,243,.5),
+}
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -7,12 +29,12 @@ html, body {
 }
 
 html {
-	background-color: #d9d9d9;
+	background-color: #333;
 }
 
 body {
-	background: linear-gradient(#f8f8f8, #d9d9d9);
-	color: #333;
+  background-image: radial-gradient(30% 50%, #555 6%, #333 90%);
+	color: #ccc;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
