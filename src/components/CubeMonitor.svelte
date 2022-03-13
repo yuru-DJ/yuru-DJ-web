@@ -17,6 +17,7 @@ const MAX_X = 400;
 const MIN_Y = 150;
 const MAX_Y = 350;
 
+const near = (now: number, prev: number): boolean => Math.abs(now - prev) < 0.1;
 const onGetPositionValue = (values: [number, number, number]) => {
   if (cubeDisabled || values.every((val) => val === 0)) return;
 
@@ -31,11 +32,10 @@ const onGetPositionValue = (values: [number, number, number]) => {
   const normY = Math.min(Math.max((y - MIN_Y) / (MAX_Y - MIN_Y), 0.001), 1);
   const normAngle = Math.floor(angle / 180);
 
-  const near = (now: number, prev: number): boolean => Math.abs(now - prev) < 0.1;
-  if (near(normX, prevX) || near(normY, prevY) || near(normAngle, prevAngle)) {
-    latestCubeParam.set([index, normX, normY, normAngle]);
-    updateCubeParams(index, {x: normX, y: normY, angle: normAngle});
-  }
+  if (near(normX, prevX) && near(normY, prevY) && near(normAngle, prevAngle)) return;
+
+  latestCubeParam.set([index, normX, normY, normAngle]);
+  updateCubeParams(index, {x: normX, y: normY, angle: normAngle});
 };
 
 const onGetMotionValue = (values: number[]) => {
