@@ -69,7 +69,7 @@ const onClick = () => {
   }
 
   .role-name {
-    width: 6em;
+    width: 5em;
     overflow: hidden;
   }
 
