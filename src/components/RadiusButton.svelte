@@ -8,7 +8,7 @@
 <button type="button" class:unit={unit} class:red={red} disabled={disabled} on:click={onClick}><slot /></button>
 
 <style lang="scss">
-$ruler: 16px;
+$ruler: 14px;
 $color-red: #AE1100;
 $color-bg: #EBECF0;
 $color-shadow: #BABECC;

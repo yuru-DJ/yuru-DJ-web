@@ -12,22 +12,22 @@
 
 	<div class="monitor-container">
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"音量"}/>
+			<CubeMonitor role={"High/Low-pass Filter"}/>
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"リバーブ"}/>
+			<CubeMonitor role={"Ping Pong Delay"}/>
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"速度"}/>
+			<CubeMonitor role={"Pitch Shifter"}/>
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"音量"}/>
+			<CubeMonitor role={"Vibrato"}/>
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"リバーブ"}/>
+			<CubeMonitor role={"Frequency Shifter"}/>
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"速度"}/>
+			<CubeMonitor role={"Reverb"}/>
 		</div>
 	</div>
 
@@ -60,7 +60,7 @@
 		display: grid;
 		grid-auto-flow: column;
 		grid-template-rows: 30% 30% 30%;
-		grid-template-columns: 48% 48%;
+		grid-template-columns: 50% 50%;
 		padding: 16px;
 		width: 100%;
   }

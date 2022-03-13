@@ -79,12 +79,12 @@ $: {
   }
 
   .role-name {
-    width: 5em;
+    width: 6em;
     overflow: hidden;
   }
 
   .connect-toio-button-wrapper {
-    margin-right: 1em;
-    width: calc(45%);
+    margin-right: 12px;
+    width: calc(50%);
   }
 </style>
