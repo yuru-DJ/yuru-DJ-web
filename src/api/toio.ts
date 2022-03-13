@@ -40,7 +40,7 @@ export const spinCube = (cube: Cube) =>
 export const turnLight = (cube: Cube) =>
   cube.lightCharacteristic.writeValue(lightBuf);
 
-export const getNewCube = async ({
+export const connectCube = async ({
   onGetMotionValue,
   onGetPositionValue,
 }: {
