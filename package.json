@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@tsconfig/svelte": "^3.0.0",
+    "node-sass": "^7.0.1",
     "sirv-cli": "^2.0.0",
     "svelte-file-dropzone": "git+https://github.com/thecodejack/svelte-file-dropzone.git",
     "tone": "^14.7.77",
