@@ -5,8 +5,8 @@ import { latestCubeParam, volume } from "../store";
 import Dropzone from "svelte-file-dropzone";
 
 let files = {
-accepted: [],
-rejected: []
+    accepted: [],
+    rejected: [],
 };
 
 // status
@@ -40,10 +40,7 @@ volume.subscribe(value => {
 
 // update fx params
 latestCubeParam.subscribe(value => {
-    let index = $latestCubeParam[0];
-    let parX = $latestCubeParam[1];
-    let parY = $latestCubeParam[2];
-    // let parAngle = $latestCubeParam[3];
+    const [index, parX, parY, parAngle] = $latestCubeParam;
 
     // switch filter by wet value
     switch (index) {
