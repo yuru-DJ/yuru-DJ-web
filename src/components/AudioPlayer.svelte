@@ -1,24 +1,29 @@
 <script lang="ts">
-
 import * as Tone from "tone";
-import {latestCubeParam, volume} from "../store";
+import { latestCubeParam, volume } from "../store";
+
+import Dropzone from "svelte-file-dropzone";
+
+let files = {
+accepted: [],
+rejected: []
+};
 
 // status
 let fileLoaded = false;
-let files;
 let filename = "";
 
 const player = new Tone.Player();
 
 // filters
 // toio0
-const filter = new Tone.AutoFilter({frequency: 0.1, depth: 0.1}).start(); 
+const filter = new Tone.AutoFilter({frequency: 0.1, depth: 0.1}).start();
 // toio1
 const pingpongDelay = new Tone.PingPongDelay({delayTime:0.1, feedback:0.1});
 // toio2
-const pitchShift = new Tone.PitchShift({pitch: 0.1, delayTime: 0.1}); 
+const pitchShift = new Tone.PitchShift({pitch: 0.1, delayTime: 0.1});
 // toio3
-const vibrato = new Tone.Vibrato({frequency: 0.1, depth: 0.1}); 
+const vibrato = new Tone.Vibrato({frequency: 0.1, depth: 0.1});
 // toio4
 const frequencyShifter = new Tone.FrequencyShifter({frequency: 0.1});
 const reverb = new Tone.JCReverb({roomSize: 0.1});
@@ -60,10 +65,10 @@ latestCubeParam.subscribe(value => {
                 pitchShift.delayTime.value = parY * 0.01;
             case 3:
                 vibrato.wet.value = 1;
-                vibrato.frequency.value = parX * 100; 
+                vibrato.frequency.value = parX * 100;
                 vibrato.depth.value = parY;
             case 4:
-                frequencyShifter.wet.value = 1; 
+                frequencyShifter.wet.value = 1;
                 frequencyShifter.frequency.value = parX * 80;
                 reverb.wet.value = 1;
                 reverb.roomSize.value = parY * 0.6;
@@ -91,15 +96,19 @@ latestCubeParam.subscribe(value => {
 
 
 // upload and load audio file
-function load() {
-    fileLoaded = true;
+function onSelectFiles(e) {
+    const { acceptedFiles, fileRejections } = e.detail;
+    files.accepted = [...files.accepted, ...acceptedFiles];
+    files.rejected = [...files.rejected, ...fileRejections];
 
-    const file = files[0];
-    filename = file.name;
+    if (!files?.accepted?.length) return;
 
+    const file = files.accepted[0];
     const url = URL.createObjectURL(file);
-
     player.load(url);
+
+    filename = file.name;
+    fileLoaded = true;
 }
 
 // start play audio file
@@ -126,15 +135,36 @@ function dispose(){
 
 </script>
 
-<h1>audio player</h1>
+<div class="container">
+    {#if !fileLoaded}
+        <Dropzone class="dropzone" on:drop={onSelectFiles}>
+            音源データをドラッグ&ドロップ<br/>またはクリックしてアップロード
+        </Dropzone>
+    {:else}
+        <h2>{filename}</h2>
+        <button on:click={start}>start</button>
+        <button on:click={stop}>stop</button>
+        <button on:click={restart}>restart</button>
+        <button on:click={dispose}>dispose</button>
+    {/if}
+</div>
 
-{#if fileLoaded == false}
-<input type="file" bind:files on:change={load}>
-{:else}
-<p>{filename}</p>
-<button on:click={start}>start</button>
-<button on:click={stop}>stop</button>
-<button on:click={restart}>restart</button>
-<button on:click={dispose}>dispose</button>
-{/if}
-
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30%;
+        width: 100%;
+    }
+    :global(.dropzone) {
+        font-weight: bold;
+        color: #61677C !important;
+        max-width: 50%;
+        border: none !important;
+        border-radius: 16px !important;
+        box-sizing: border-box;
+        box-shadow: -5px -5px 20px #ccc,  5px 5px 20px #BABECC;
+        cursor: pointer;
+    }
+</style>
