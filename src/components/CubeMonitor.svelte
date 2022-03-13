@@ -62,8 +62,8 @@ const onClick = () => {
 <div class="container">
   <h2 class="role-name">{role}</h2>
   <div class="connect-toio-button-wrapper">
-    <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded} />
-    <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded} />
+    <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded || cubeDisabled} />
+    <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded || cubeDisabled} />
   </div>
   <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
 </div>
