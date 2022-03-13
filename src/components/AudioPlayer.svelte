@@ -11,10 +11,10 @@ rejected: []
 
 // status
 let fileLoaded = false;
+let playing = false;
 let filename = "";
 
 const player = new Tone.Player();
-
 // filters
 // toio0
 const filter = new Tone.AutoFilter({frequency: 0.1, depth: 0.1}).start();
@@ -27,13 +27,11 @@ const vibrato = new Tone.Vibrato({frequency: 0.1, depth: 0.1});
 // toio4
 const frequencyShifter = new Tone.FrequencyShifter({frequency: 0.1});
 const reverb = new Tone.JCReverb({roomSize: 0.1});
-
 // connect
 player.fan(filter, pitchShift, frequencyShifter);
 filter.chain(pingpongDelay, Tone.Destination);
 pitchShift.chain(vibrato, Tone.Destination);
 frequencyShifter.chain(reverb, Tone.Destination);
-
 
 // store
 volume.subscribe(value => {
@@ -42,7 +40,6 @@ volume.subscribe(value => {
 
 // update fx params
 latestCubeParam.subscribe(value => {
-
     let index = $latestCubeParam[0];
     let parX = $latestCubeParam[1];
     let parY = $latestCubeParam[2];
@@ -114,21 +111,30 @@ function onSelectFiles(e) {
 // start play audio file
 function start() {
     player.start();
+    playing = true;
 }
 // stop audio file
 function stop() {
     player.stop();
+    playing = false;
 }
 // restart audio file
 function restart() {
     player.start();
     player.restart();
+    playing = true;
 }
 
 // dispose current audio file
-function dispose(){
+function dispose() {
     player.dispose();
     player.fan(filter, pitchShift, reverb);
+    playing = false;
+
+    files = {
+        accepted: [],
+        rejected: []
+    };
     fileLoaded = false;
     filename = "";
 }
@@ -141,15 +147,22 @@ function dispose(){
             音源データをドラッグ&ドロップ<br/>またはクリックしてアップロード
         </Dropzone>
     {:else}
-        <h2>{filename}</h2>
-        <button on:click={start}>start</button>
-        <button on:click={stop}>stop</button>
-        <button on:click={restart}>restart</button>
-        <button on:click={dispose}>dispose</button>
+        <div class="player-buttons-container">
+            <h2>{filename}</h2>
+            <div class="buttons">
+                {#if !playing}
+                   <button on:click={start}>start</button>
+                {:else}
+                    <button on:click={stop}>stop</button>
+                {/if}
+                <button on:click={restart}>restart</button>
+                <button on:click={dispose}>dispose</button>
+            </div>
+        </div>
     {/if}
 </div>
 
-<style>
+<style lang="scss">
     .container {
         display: flex;
         justify-content: center;
@@ -166,5 +179,17 @@ function dispose(){
         box-sizing: border-box;
         box-shadow: -5px -5px 20px #ccc,  5px 5px 20px #BABECC;
         cursor: pointer;
+    }
+
+    .player-buttons-container {
+        text-align: center;
+        height: 100%;
+        width: 100%;
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 </style>
