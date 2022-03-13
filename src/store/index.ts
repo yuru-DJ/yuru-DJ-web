@@ -14,10 +14,13 @@ export const volume = writable<number>(1);
 export const addCube = () =>
   cubeParams.update((params) => [...params, { x: -1, y: -1, angle: -1, fx: -1}]);
 
-export const updateCubeParams = (index: number, newParams: CubeParams) =>
+export const updateCubeParams = (index: number, newParams: CubeParams) => {
   cubeParams.update((cubeParams) => {
     const params = [...cubeParams];
     params.splice(index, 1, newParams);
 
     return params;
   });
+
+  latestCubeParam.set([index, newParams.x, newParams.y, newParams.angle]);
+}

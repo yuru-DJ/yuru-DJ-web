@@ -4,7 +4,7 @@ import { addCube, cubeParams, updateCubeParams, latestCubeParam } from "../store
 import RadiusButton from "./RadiusButton.svelte";
 import DjSlider from "./DJSlider.svelte";
 
-export let role: string = 'No name';
+export let role: string;
 
 // let cube: Cube;
 let cubeLoaded = false;
@@ -34,12 +34,16 @@ const onGetPositionValue = (values: [number, number, number]) => {
 
   if (near(normX, prevX) && near(normY, prevY) && near(normAngle, prevAngle)) return;
 
-  latestCubeParam.set([index, normX, normY, normAngle]);
-  updateCubeParams(index, {x: normX, y: normY, angle: normAngle});
+  updateCubeParams(index, { x: normX, y: normY, angle: normAngle });
 };
 
 const onGetMotionValue = (values: number[]) => {
   if (values[4] === 1) {
+    x = 0;
+    y = 0;
+    angle = 0;
+    updateCubeParams(index, { x, y, angle })
+
     cubeDisabled = false;
   } else if (values[4] > 1) {
     cubeDisabled = true;
