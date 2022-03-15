@@ -1,14 +1,15 @@
 <script lang="ts">
 import { connectCube } from "../api/toio";
-import { addCube, cubeParams, updateCubeParams, latestCubeParam } from "../store";
+import { addCube, cubeParams, updateCubeParams, type RoleType } from "../store";
 import RadiusButton from "./RadiusButton.svelte";
 import DjSlider from "./DJSlider.svelte";
 
-export let role: string;
+export let label: string;
+export let role: RoleType;
 
 // let cube: Cube;
 let cubeLoaded = false;
-let cubeDisabled = false;
+let cubeDisabled = true;
 let index;
 let [x, y, angle] = [-1, -1, -1]; // normalized value
 
@@ -34,7 +35,7 @@ const onGetPositionValue = (values: [number, number, number]) => {
 
   if (near(normX, prevX) && near(normY, prevY) && near(normAngle, prevAngle)) return;
 
-  updateCubeParams(index, { x: normX, y: normY, angle: normAngle });
+  updateCubeParams(index, { x: normX, y: normY, angle: normAngle, role });
 };
 
 const onGetMotionValue = (values: number[]) => {
@@ -42,7 +43,7 @@ const onGetMotionValue = (values: number[]) => {
     x = 0;
     y = 0;
     angle = 0;
-    updateCubeParams(index, { x, y, angle })
+    updateCubeParams(index, { x, y, angle, role })
 
     cubeDisabled = false;
   } else if (values[4] > 1) {
@@ -55,7 +56,7 @@ const onClick = () => {
     if (!c) return
 
     // cube = c;
-    addCube();
+    addCube(role);
     index = $cubeParams.length - 1;
     cubeLoaded = true;
   })
@@ -64,7 +65,7 @@ const onClick = () => {
 </script>
 
 <div class="container">
-  <h2 class="role-name">{role}</h2>
+  <h2 class="role-label">{label}</h2>
   <div class="connect-toio-button-wrapper">
     <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded || cubeDisabled} />
     <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded || cubeDisabled} />
@@ -81,7 +82,7 @@ const onClick = () => {
     width: 100%;
   }
 
-  .role-name {
+  .role-label {
     width: 5em;
     overflow: hidden;
   }
