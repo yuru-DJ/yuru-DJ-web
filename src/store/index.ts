@@ -1,18 +1,21 @@
 import { writable, derived } from "svelte/store";
 
+export type RoleType = 'filter' | 'pingpongDelay' | 'pitchShift' | 'vibrato' | 'frequencyShifter' | 'reverb';
+
 // x, y, angle are normalized value
 export interface CubeParams {
   x: number;
   y: number;
   angle: number;
+  role: RoleType;
 }
 
 export const cubeParams = writable<CubeParams[]>([]);
-export const latestCubeParam = writable<number[]>([0, 0, 0, 0]); // [index, x, y, angle](normalized)
+export const latestCubeParam = writable<CubeParams>();
 export const volume = writable<number>(1);
 
-export const addCube = () =>
-  cubeParams.update((params) => [...params, { x: -1, y: -1, angle: -1, fx: -1}]);
+export const addCube = (role: RoleType) =>
+  cubeParams.update((params) => [...params, { x: -1, y: -1, angle: -1, role }]);
 
 export const updateCubeParams = (index: number, newParams: CubeParams) => {
   cubeParams.update((cubeParams) => {
@@ -22,5 +25,5 @@ export const updateCubeParams = (index: number, newParams: CubeParams) => {
     return params;
   });
 
-  latestCubeParam.set([index, newParams.x, newParams.y, newParams.angle]);
+  latestCubeParam.set({ ...newParams });
 }

@@ -12,22 +12,22 @@
 
 	<div class="monitor-container">
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"High/Low-pass Filter"}/>
+			<CubeMonitor label="High/Low-pass Filter" role="filter" />
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"Ping Pong Delay"}/>
+			<CubeMonitor label="Ping Pong Delay" role="pingpongDelay" />
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"Pitch Shifter"}/>
+			<CubeMonitor label="Pitch Shifter" role="pitchShift" />
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"Vibrato"}/>
+			<CubeMonitor label={"Vibrato"} role="vibrato" />
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"Frequency Shifter"}/>
+			<CubeMonitor label="Frequency Shifter" role="frequencyShifter" />
 		</div>
 		<div class="monitor-wrapper">
-			<CubeMonitor role={"Reverb"}/>
+			<CubeMonitor label="Reverb" role="filter" />
 		</div>
 	</div>
 

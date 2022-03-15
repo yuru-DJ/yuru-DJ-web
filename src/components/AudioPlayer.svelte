@@ -15,16 +15,11 @@ let playing = false;
 let filename = "";
 
 const player = new Tone.Player();
-// filters
-// toio0
+// effects
 const filter = new Tone.AutoFilter({frequency: 0.1, depth: 0.1}).start();
-// toio1
 const pingpongDelay = new Tone.PingPongDelay({delayTime:0.1, feedback:0.1});
-// toio2
 const pitchShift = new Tone.PitchShift({pitch: 0.1, delayTime: 0.1});
-// toio3
 const vibrato = new Tone.Vibrato({frequency: 0.1, depth: 0.1});
-// toio4
 const frequencyShifter = new Tone.FrequencyShifter({frequency: 0.1});
 const reverb = new Tone.JCReverb({roomSize: 0.1});
 // connect
@@ -35,38 +30,43 @@ frequencyShifter.chain(reverb, Tone.Destination);
 
 // store
 volume.subscribe(value => {
-    player.volume.value = $volume;
+    player.volume.value = value;
 });
 
 // update fx params
-latestCubeParam.subscribe(value => {
-    const [index, parX, parY, parAngle] = $latestCubeParam;
+latestCubeParam.subscribe(params => {
+    if (!params) return;
+
+    const { x, y, angle, role } = params;
+
+    // TODO: ここで正規化を行う
+    const parX = x;
+    const parY = y;
 
     // switch filter by wet value
-    switch (index) {
-        case 0:
+    switch (role) {
+        case 'filter':
             filter.wet.value = 1;
             filter.frequency.value = parX * 10;
             filter.depth.value = parY;
-        case 1:
+        case 'pingpongDelay':
             pingpongDelay.wet.value = 1;
             pingpongDelay.delayTime.value = parX * 0.2;
             pingpongDelay.feedback.value = parY * 0.6;
-        case 2:
+        case 'pitchShift':
             pitchShift.wet.value = 1;
             pitchShift.pitch = parX * 12;
             pitchShift.delayTime.value = parY * 0.01;
-        case 3:
+        case 'vibrato':
             vibrato.wet.value = 1;
             vibrato.frequency.value = parX * 100;
             vibrato.depth.value = parY;
-        case 4:
+        case 'frequencyShifter':
             frequencyShifter.wet.value = 1;
             frequencyShifter.frequency.value = parX * 80;
+        case 'reverb':
             reverb.wet.value = 1;
             reverb.roomSize.value = parY * 0.6;
-        default:
-            break;
     }
 });
 
