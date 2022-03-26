@@ -1,6 +1,6 @@
 <script lang="ts">
 import * as Tone from "tone";
-import { latestCubeParam, volume } from "../store";
+import { latestCubeParam, volume, playing } from "../store";
 
 import Dropzone from "svelte-file-dropzone";
 
@@ -11,7 +11,6 @@ let files = {
 
 // status
 let fileLoaded = false;
-let playing = false;
 let filename = "";
 
 const player = new Tone.Player();
@@ -90,25 +89,25 @@ function onSelectFiles(e) {
 // start play audio file
 function start() {
     player.start();
-    playing = true;
+    playing.set(true);
 }
 // stop audio file
 function stop() {
     player.stop();
-    playing = false;
+    playing.set(false);
 }
 // restart audio file
 function restart() {
     player.start();
     player.restart();
-    playing = true;
+    playing.set(true);
 }
 
 // dispose current audio file
 function dispose() {
     player.dispose();
     player.fan(filter, pitchShift, reverb);
-    playing = false;
+    playing.set(false);
 
     files = {
         accepted: [],
@@ -129,7 +128,7 @@ function dispose() {
         <div class="player-buttons-container">
             <h2>{filename}</h2>
             <div class="buttons">
-                {#if !playing}
+                {#if !$playing}
                    <button on:click={start}>start</button>
                 {:else}
                     <button on:click={stop}>stop</button>

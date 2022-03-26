@@ -31,6 +31,15 @@
 		</div>
 	</div>
 
+	<div class="monitor-container">
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"spin"}/>
+		</div>
+		<div class="monitor-wrapper">
+			<CubeMonitor role={"spin"}/>
+		</div>
+	</div>
+
 	<footer>
 		<SerialMonitor />
 	</footer>
