@@ -1,6 +1,6 @@
 <script lang="ts">
-import { connectCube } from "../api/toio";
-import { addCube, cubeParams, updateCubeParams, latestCubeParam } from "../store";
+import { connectCube, spinCube } from "../api/toio";
+import { addCube, cubeParams, updateCubeParams, playing } from "../store";
 import RadiusButton from "./RadiusButton.svelte";
 import DjSlider from "./DJSlider.svelte";
 
@@ -58,6 +58,11 @@ const onClick = () => {
     addCube();
     index = $cubeParams.length - 1;
     cubeLoaded = true;
+
+    setInterval(() => {
+      if ($playing && role == 'spin')
+        spinCube(c)
+    }, 100)
   })
 }
 
@@ -65,10 +70,12 @@ const onClick = () => {
 
 <div class="container">
   <h2 class="role-name">{role}</h2>
-  <div class="connect-toio-button-wrapper">
-    <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded || cubeDisabled} />
-    <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded || cubeDisabled} />
-  </div>
+  {#if role != 'spin'}
+    <div class="connect-toio-button-wrapper">
+      <DjSlider max={MAX_X} min={MIN_X} value={x} disabled={!cubeLoaded || cubeDisabled} />
+      <DjSlider max={MAX_Y} min={MIN_Y} value={y} disabled={!cubeLoaded || cubeDisabled} />
+    </div>
+  {/if}
   <RadiusButton onClick={onClick} disabled={cubeLoaded}>{cubeLoaded ? '接続済み' : 'Toioと繋ぐ'}</RadiusButton>
 </div>
 

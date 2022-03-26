@@ -10,6 +10,7 @@ export interface CubeParams {
 export const cubeParams = writable<CubeParams[]>([]);
 export const latestCubeParam = writable<number[]>([0, 0, 0, 0]); // [index, x, y, angle](normalized)
 export const volume = writable<number>(1);
+export const playing = writable<boolean>(false);
 
 export const addCube = () =>
   cubeParams.update((params) => [...params, { x: -1, y: -1, angle: -1, fx: -1}]);
